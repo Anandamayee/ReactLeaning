@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Persons/Person/Person.jsx.js';
-import './Persons/Person/Person.css';
+import Person from '../components/Persons/Person/Person.jsx';
+import '../components//Persons/Person/Person.css';
 import UserInput from '../components/User/UserInput.jsx'
 import UserOutput from '../components/User/UserOutput.jsx';
 import Validation from '../components/User/Validation.jsx';
 import CharComponent from '../components/User/CharComponent.jsx';
 import '../components/User/User.css';
 import Radium,{StyleRoot} from 'radium'
+import Persons from '../components/Persons/Persons';
 
 class App extends Component {
 
@@ -79,33 +80,17 @@ class App extends Component {
     this.setState({ userName: inputs.join('') })
   }
   render() {
-    const style = {
-      background: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        background: 'lightgreen',
-        color: 'black'
-      }
-    };
+    
 
     let persons = null;
     if (this.state.showPersons) {
       persons = (
         <div >
-          {this.state.persons.map((person, index) => {
-            return <Person
-              name={person.name}
-              age={person.age}
-              key={person.id}
-              change={(event) => this.nameChangedHandler(event, person.id)}
-              click={this.deletePersonHandler.bind(this, index)}
-            />
-          })
-          }
+         <Persons 
+         persons={this.state.persons}
+         clicked={this.deletePersonHandler}
+         changed={this.nameChangedHandler}
+         />
           {/* <Person
             name={this.state.persons[0].name}
             age={this.state.persons[0].age}
@@ -142,23 +127,12 @@ class App extends Component {
           click={this.removeCharcter.bind(this, index)}
         />
       })
-    let classes = [];
-
-    if (this.state.persons.length <= 2) {
-      classes.push('red');
-    }
-    if (this.state.persons.length <= 1) {
-      classes.push('bold');
-    }
+    
 
     return (
       <StyleRoot>
       <div className="App">
-        <h1 className={classes.join(' ')}> Hello There</h1>
-        <button
-          onClick={this.togglePersonHandler}
-          style={style}
-        >Toggle Persons</button>
+       
         {/* () => this.switchNameHandler('anandamayee') */}
 
         {/* this.state.showPersons ?

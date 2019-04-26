@@ -1,0 +1,29 @@
+.red {
+  color: red;
+}
+.bold {
+  font-style: italic;
+}
+
+.Cockpit button {
+  background: green;
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.Cockpit button:hover {
+  background: lightgreen;
+  color: black;
+}
+
+.Cockpit button.Red {
+  background: Red;
+}
+
+.Cockpit button.Red:hover {
+    background: salmon;
+    color: black;
+  }
