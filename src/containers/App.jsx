@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person.jsx';
-import './Person/Person.css';
-import UserInput from './User/UserInput.jsx'
-import UserOutput from './User/UserOutput.jsx';
-import Validation from './User/Validation.jsx';
-import CharComponent from './User/CharComponent.jsx';
-import './User/User.css';
+import Person from './Persons/Person/Person.jsx.js';
+import './Persons/Person/Person.css';
+import UserInput from '../components/User/UserInput.jsx'
+import UserOutput from '../components/User/UserOutput.jsx';
+import Validation from '../components/User/Validation.jsx';
+import CharComponent from '../components/User/CharComponent.jsx';
+import '../components/User/User.css';
 import Radium,{StyleRoot} from 'radium'
 
 class App extends Component {

@@ -4,16 +4,6 @@ import './Person.css'
 import Radium from 'radium'
 
 
-// class Person extends Component {
-
-//     render() {
-//         return (
-//             <div>
-//                 <p>Person</p>
-//             </div>
-//         );
-//     }
-// }
 
 // props - Parameters , reloads dom on change
 // children-other than params inside tags
