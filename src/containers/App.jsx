@@ -7,11 +7,16 @@ import UserOutput from '../components/User/UserOutput.jsx';
 import Validation from '../components/User/Validation.jsx';
 import CharComponent from '../components/User/CharComponent.jsx';
 import '../components/User/User.css';
-import Radium,{StyleRoot} from 'radium'
+import Radium, { StyleRoot } from 'radium'
 import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
+  constructor(props){
+    console.log("constructor  :",props);
+    super(props);
+  }
   // state- reserved property . if changes reload the dom can be used with class base component 
   state = {
     persons: [
@@ -32,7 +37,21 @@ class App extends Component {
       index: 0
     }],
     charcatersEntered: null
+  }
 
+  static getDerivedStateFromProps(props,state){
+    console.log("getDerivedStateFromProps  :",props);
+    return state;
+  }
+  componentDidMount(){
+    console.log("componentDidMount  :");
+  }
+  shouldComponentUpdate(nextProps,nextState){
+    console.log(" app js shouldComponentUpdate");
+    return true;
+  }
+  componentDidUpdate(){
+    console.log(" app js componentDidUpdate");
   }
   switchNameHandler = (newName) => {
     console.log('was clicked');
@@ -63,14 +82,12 @@ class App extends Component {
       showPersons: !this.state.showPersons
     });
   }
-
   deletePersonHandler = (personIndex) => {
     // const persons=this.state.persons.slice();
     let persons = [...this.state.persons];
     persons.splice(personIndex, 1)
     this.setState({ persons: persons });
   }
-
   nameEnteredHandler = (event) => {
     this.setState({ userName: event.target.value })
   }
@@ -80,39 +97,16 @@ class App extends Component {
     this.setState({ userName: inputs.join('') })
   }
   render() {
-    
-
+    console.log("render  :");
     let persons = null;
     if (this.state.showPersons) {
       persons = (
-        <div >
-         <Persons 
-         persons={this.state.persons}
-         clicked={this.deletePersonHandler}
-         changed={this.nameChangedHandler}
-         />
-          {/* <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-            click={this.switchNameHandler.bind(this, 'anandamayee!')}
-            change={this.nameChangedHandler}
-          >Dancing</Person>
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-          />
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age}
-          /> */}
-        </div>
+        <Persons
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangedHandler}
+        />
       )
-      style.background = 'red'
-      style[':hover']= {
-        background: 'salmon',
-        color: 'black'
-      }
-
     }
     let validName = null;
     if (this.state.userName.length > 15 || this.state.userName.length < 5) {
@@ -120,31 +114,24 @@ class App extends Component {
         <Validation userName={this.state.userName} />
       )
     }
-
     let char =
       this.state.userName.split('').map((char, index) => {
         return <CharComponent characters={char}
           click={this.removeCharcter.bind(this, index)}
         />
       })
-    
-
     return (
       <StyleRoot>
-      <div className="App">
-       
-        {/* () => this.switchNameHandler('anandamayee') */}
+        <div className="App">
 
-        {/* this.state.showPersons ?
-
-      : null
-      } */}
-
-
-        {persons}
-
-
-        {/* 
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            persons={this.state.persons}
+            togggled={this.togglePersonHandler}
+          />
+          {persons}
+          {/* 
         <UserInput
           userName={this.state.userName}
           change={this.nameEnteredHandler}
@@ -155,60 +142,10 @@ class App extends Component {
         {validName}
         {char} */}
 
-      </div>
+
+        </div>
       </StyleRoot>
     );
-    //   return React.createElement('div',
-    //     { className: 'App' },
-    //     React.createElement('h1',
-    //       null, 'Hi There'));
   }
 }
 export default Radium(App);
-
-// // userState- doesn't merge other states 
-// import React, { Component, useState } from 'react';
-// import './App.css';
-// import Person from './Person/Person.jsx'
-// // class App extends Component {
-// const app = props => {
-//   const [personsState, setpersonsState] = useState({
-//     persons: [
-//       {
-//         name: 'andy', age: 24
-//       },
-//       {
-//         name: 'sandy', age: 26
-//       }
-//     ]
-//   });
-//   const switchNameHandler = () => {
-//     console.log('was clicked');
-//     setpersonsState({
-//       persons:
-//         [{
-//           name: 'anandamayee', age: 24
-//         },
-//         {
-//           name: 'sandy', age: 26
-//         }]
-//     })
-//   }
-//   // render() {
-//   return (
-//     <div className="App">
-//       <h1> Hello There</h1>
-//       <button onClick={switchNameHandler}>Switch Name</button>
-//       <Person name={personsState.persons[0].name}
-//         age={personsState.persons[0].age}  >Dancing</Person>
-//       <Person name={personsState.persons[1].name}
-//         age={personsState.persons[1].age} />
-//     </div>
-//   );
-//   //   return React.createElement('div',
-//   //     { className: 'App' },
-//   //     React.createElement('h1',
-//   //       null, 'Hi There'));
-// }
-// // }
-// export default app;
