@@ -10,7 +10,8 @@ import '../components/User/User.css';
 import Radium, { StyleRoot } from 'radium'
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
-import WithClass from '../hoc/WithClass';
+import withClass from '../hoc/WithClass';
+import Auxiliary from '../hoc/Auxiliary';
 
 class App extends Component {
 
@@ -38,7 +39,8 @@ class App extends Component {
       index: 0
     }],
     showCockPit: true,
-    charcatersEntered: null
+    charcatersEntered: null,
+    changeCounter: 0
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -79,7 +81,12 @@ class App extends Component {
       })
     let persons = [...this.state.persons];
     persons[personIndex].name = event.target.value
-    this.setState({ persons: persons });
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      }
+    });
   }
   togglePersonHandler = () => {
     this.setState({
@@ -127,7 +134,8 @@ class App extends Component {
     return (
       <StyleRoot>
         {/* <div className="App"> */}
-        <WithClass classess="App">
+        {/* <WithClass classess="App"> */}
+        <Auxiliary>
           <button onClick={() => {
             this.setState({ showCockPit: !this.state.showCockPit })
           }}
@@ -152,11 +160,11 @@ class App extends Component {
         />
         {validName}
         {char} */}
-
-        </WithClass>
+        </Auxiliary>
+        {/* </WithClass> */}
         {/* </div> */}
       </StyleRoot >
     );
   }
 }
-export default Radium(App);
+export default withClass(App, 'App');

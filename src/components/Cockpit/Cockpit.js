@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Radium from 'radium';
 import classes from './Cockpit.module.css'
 const cockpit = (props) => {
@@ -20,12 +20,15 @@ const cockpit = (props) => {
     // }, [props.persons]) 
     //condition
 
+    const toogleButtonRef = useRef(null);
     //only once
     useEffect(() => {
         console.log("cockpit js , useEffect");
         setTimeout(() => {
             alert('saved data')
+            toogleButtonRef.current.click();
         }, 1000);
+        
         return () => {
             // clearTimeout(timer);
             console.log('cock pit use effect clean up');
@@ -42,6 +45,7 @@ const cockpit = (props) => {
             <h1>{props.title}</h1>
             <h1 className={assignableClasses.join(' ')}> Hello There</h1>
             <button
+                ref={toogleButtonRef}
                 onClick={props.togggled}
                 className={buttonClass}
             >Toggle Persons</button>
