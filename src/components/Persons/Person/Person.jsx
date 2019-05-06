@@ -5,7 +5,7 @@ import Radium from 'radium'
 import PropTypes from 'prop-types'
 import Auxiliary from '../../../hoc/Auxiliary.js';
 import withClass from '../../../hoc/WithClass'
-
+import AuthContext from '../../../context/auth-context'
 
 
 // props - Parameters , reloads dom on change
@@ -13,9 +13,9 @@ import withClass from '../../../hoc/WithClass'
 // const person = (props) => {
 class Person extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.inputElementRef=React.createRef();
+        this.inputElementRef = React.createRef();
     }
     componentDidMount() {
         this.inputElementRef.focus();
@@ -27,6 +27,8 @@ class Person extends Component {
             }
         }
         console.log("personjs rendering");
+
+
         return (
 
             // <div className="Person" style={style} >
@@ -34,8 +36,17 @@ class Person extends Component {
 
             // same as Auxiliary
             <Fragment>
+                <AuthContext.Consumer>
+                    {
+                        (context) => 
+                        context.authenticated ?
+                            <p>Authenticated</p> : 'please login'
+                    }
+                </AuthContext.Consumer>
+                {/* {this.props.isAuth ?
+                    <p>Authenticated</p> : 'please login'} */}
                 <p onClick={this.props.click}>
-                    I'm {this.props.name} and  
+                    I'm {this.props.name} and
                 {this.props.age} years old</p>
                 <p  > {this.props.children}</p>
                 <input

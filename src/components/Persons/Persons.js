@@ -8,7 +8,7 @@ class Persons extends PureComponent {
     //     console.log("personss  getDerivedStateFromProps");
     //     return state;
     // }
-    
+
     // shouldComponentUpdate(nextProps, nextState) {
     //     console.log("persons  shouldComponentUpdate", nextProps);
     //     if (nextProps.persons !== this.props.persons ||
@@ -36,6 +36,7 @@ class Persons extends PureComponent {
                 key={person.id}
                 change={(event) => this.props.changed(event, person.id)}
                 click={this.props.clicked.bind(this, index)}
+                isAuth={this.props.isAuthenticated}
             />);
         })
     }

@@ -12,6 +12,7 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/WithClass';
 import Auxiliary from '../hoc/Auxiliary';
+import AuthContext from '../context/auth-context'
 
 class App extends Component {
 
@@ -40,7 +41,8 @@ class App extends Component {
     }],
     showCockPit: true,
     charcatersEntered: null,
-    changeCounter: 0
+    changeCounter: 0,
+    authenticated: false
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -102,10 +104,17 @@ class App extends Component {
   nameEnteredHandler = (event) => {
     this.setState({ userName: event.target.value })
   }
-  removeCharcter(inputIndex) {
+  removeCharcter = (inputIndex) => {
     let inputs = [...this.state.userName]
     inputs.splice(inputIndex, 1);
     this.setState({ userName: inputs.join('') })
+  }
+  loginHandler = () => {
+    this.setState((prevState) => {
+      return {
+        authenticated: !prevState.authenticated
+      }
+    })
   }
   render() {
     console.log("render  :");
@@ -116,6 +125,7 @@ class App extends Component {
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler}
+          isAuthenticated={this.state.authenticated}
         />
       )
     }
@@ -141,15 +151,22 @@ class App extends Component {
           }}
           >ToggleCockPit
       </button>
-          {this.state.showCockPit ?
-            <Cockpit
-              title={this.props.appTitle}
-              showPersons={this.state.showPersons}
-              personsLength={this.state.persons.length}
-              togggled={this.togglePersonHandler}
-            />
-            : null}
-          {persons}
+          <AuthContext.Provider value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler
+          }}>
+            {this.state.showCockPit ?
+              <Cockpit
+                title={this.props.appTitle}
+                showPersons={this.state.showPersons}
+                personsLength={this.state.persons.length}
+                togggled={this.togglePersonHandler}
+                logIn={this.loginHandler}
+
+              />
+              : null}
+            {persons}
+          </AuthContext.Provider>
           {/* 
         <UserInput
           userName={this.state.userName}
