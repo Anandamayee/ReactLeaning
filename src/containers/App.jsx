@@ -10,11 +10,12 @@ import '../components/User/User.css';
 import Radium, { StyleRoot } from 'radium'
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 
 class App extends Component {
 
-  constructor(props){
-    console.log("constructor  :",props);
+  constructor(props) {
+    console.log("constructor  :", props);
     super(props);
   }
   // state- reserved property . if changes reload the dom can be used with class base component 
@@ -36,21 +37,24 @@ class App extends Component {
       charcter: '',
       index: 0
     }],
+    showCockPit: true,
     charcatersEntered: null
   }
 
-  static getDerivedStateFromProps(props,state){
-    console.log("getDerivedStateFromProps  :",props);
+  static getDerivedStateFromProps(props, state) {
+    console.log("getDerivedStateFromProps  :", props);
     return state;
   }
-  componentDidMount(){
+  componentDidMount() {
     console.log("componentDidMount  :");
   }
-  shouldComponentUpdate(nextProps,nextState){
+  shouldComponentUpdate(nextProps, nextState) {
     console.log(" app js shouldComponentUpdate");
-    return true;
+
+    return true
+
   }
-  componentDidUpdate(){
+  componentDidUpdate() {
     console.log(" app js componentDidUpdate");
   }
   switchNameHandler = (newName) => {
@@ -122,14 +126,21 @@ class App extends Component {
       })
     return (
       <StyleRoot>
-        <div className="App">
-
-          <Cockpit
-            title={this.props.appTitle}
-            showPersons={this.state.showPersons}
-            persons={this.state.persons}
-            togggled={this.togglePersonHandler}
-          />
+        {/* <div className="App"> */}
+        <WithClass classess="App">
+          <button onClick={() => {
+            this.setState({ showCockPit: !this.state.showCockPit })
+          }}
+          >ToggleCockPit
+      </button>
+          {this.state.showCockPit ?
+            <Cockpit
+              title={this.props.appTitle}
+              showPersons={this.state.showPersons}
+              personsLength={this.state.persons.length}
+              togggled={this.togglePersonHandler}
+            />
+            : null}
           {persons}
           {/* 
         <UserInput
@@ -142,9 +153,9 @@ class App extends Component {
         {validName}
         {char} */}
 
-
-        </div>
-      </StyleRoot>
+        </WithClass>
+        {/* </div> */}
+      </StyleRoot >
     );
   }
 }

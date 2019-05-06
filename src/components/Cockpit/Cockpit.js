@@ -5,10 +5,10 @@ const cockpit = (props) => {
     let assignableClasses = [];
     let buttonClass = '';
     if (props.showPersons) buttonClass = classes.Red;
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
         assignableClasses.push(classes.red);
     }
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
         assignableClasses.push(classes.bold);
     }
     // useEffect(() => {
@@ -27,9 +27,16 @@ const cockpit = (props) => {
             alert('saved data')
         }, 1000);
         return () => {
+            // clearTimeout(timer);
             console.log('cock pit use effect clean up');
         }
-    }, [])
+    }, []);
+    useEffect(() => {
+        console.log("cockpit js ,2nd useEffect");
+        return () => {
+            console.log('cock pit 2nd use effect clean up');
+        }
+    });
     return (
         <div className={classes.Cockpit}>
             <h1>{props.title}</h1>
@@ -41,4 +48,4 @@ const cockpit = (props) => {
         </div>
     );
 }
-export default cockpit;
+export default React.memo(cockpit);
