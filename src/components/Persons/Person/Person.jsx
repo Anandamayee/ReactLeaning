@@ -17,8 +17,13 @@ class Person extends Component {
         super(props)
         this.inputElementRef = React.createRef();
     }
+
+    static contextType = AuthContext;
+
     componentDidMount() {
         this.inputElementRef.focus();
+        console.log(this.context.authenticated);
+
     }
     render() {
         const style = {
@@ -36,13 +41,17 @@ class Person extends Component {
 
             // same as Auxiliary
             <Fragment>
-                <AuthContext.Consumer>
+                {/* <AuthContext.Consumer>
                     {
                         (context) => 
                         context.authenticated ?
-                            <p>Authenticated</p> : 'please login'
+                            <p>Authenticated</p> :<p>Please login</p>
                     }
-                </AuthContext.Consumer>
+                </AuthContext.Consumer> */}
+
+                {this.context.authenticated ?
+                    <p>Authenticated</p> : <p>Please login</p>}
+
                 {/* {this.props.isAuth ?
                     <p>Authenticated</p> : 'please login'} */}
                 <p onClick={this.props.click}>

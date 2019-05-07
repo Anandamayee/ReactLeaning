@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import Radium from 'radium';
 import classes from './Cockpit.module.css'
 import AuthContext from '../../context/auth-context'
@@ -22,6 +22,7 @@ const cockpit = (props) => {
     //condition
 
     const toogleButtonRef = useRef(null);
+    const contextType = useContext(AuthContext);
     //only once
     useEffect(() => {
         console.log("cockpit js , useEffect");
@@ -50,11 +51,14 @@ const cockpit = (props) => {
                 onClick={props.togggled}
                 className={buttonClass}
             >Toggle Persons</button>
-            <AuthContext.Consumer>
+            
+            {/* <AuthContext.Consumer>
                 {
                     context => <button onClick={context.login}>Login</button>
                 }
-            </AuthContext.Consumer>
+            </AuthContext.Consumer> */}
+
+            <button onClick={contextType.login}>Login</button>
 
         </div>
     );
